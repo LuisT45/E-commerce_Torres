@@ -128,23 +128,15 @@ const showHTML = () => {
 	countProducts.innerText = totalOfProducts;
 };
 
-// Función para establecer los datos del carrito desde un JSON
-const setCartDataFromJSON = (jsonData) => {
-  allProducts = JSON.parse(jsonData);
-  showHTML();
-};
-
-// Evento para guardar los datos del carrito en el localStorage al cerrar la página
-window.addEventListener('beforeunload', () => {
-  const cartDataJSON = getCartDataAsJSON();
-  localStorage.setItem('cartData', cartDataJSON);
-});
-
-// Evento para cargar los datos del carrito desde el localStorage al cargar la página
+// Evento para cargar los datos del carrito desde localStorage al cargar la página
 window.addEventListener('DOMContentLoaded', () => {
-  const cartDataJSON = localStorage.getItem('cartData');
-  if (cartDataJSON) {
-    setCartDataFromJSON(cartDataJSON);
-  }
+    const cartDataJSON = localStorage.getItem('cartData');
+    if (cartDataJSON) {
+        setCartDataFromJSON(cartDataJSON);
+    } else {
+        // Si no hay datos en localStorage, podemos inicializar allProducts como un arreglo vacío
+        allProducts = [];
+        showHTML(); // Actualizar el HTML con el arreglo vacío
+    }
 });
 
